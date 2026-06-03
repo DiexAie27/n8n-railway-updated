@@ -15,5 +15,4 @@ RUN printf '#!/bin/sh\nrclone rcd --rc-no-auth --rc-addr :5572 --config /home/no
 
 USER node
 
-ENTRYPOINT ["/custom-entrypoint.sh"]
-CMD ["n8n"]
+ENTRYPOINT ["tini", "--", "/custom-entrypoint.sh"]
