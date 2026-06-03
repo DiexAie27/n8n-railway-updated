@@ -2,10 +2,7 @@ FROM n8nio/n8n:latest
 
 USER root
 
-RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    && curl https://rclone.org/install.sh | bash \
-    && apt-get clean
+RUN apk add --no-cache curl unzip \
+    && curl https://rclone.org/install.sh | sh
 
 USER node
