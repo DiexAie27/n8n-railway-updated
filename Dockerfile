@@ -10,7 +10,7 @@ RUN cd /tmp && \
     chmod +x /usr/local/bin/rclone && \
     rm -rf /tmp/rclone*
 
-RUN printf '#!/bin/sh\nrclone rcd --rc-no-auth --rc-addr :5572 --config /home/node/.n8n/rclone/rclone.conf &\nexec tini -- /docker-entrypoint.sh "$@"\n' > /custom-entrypoint.sh && \
+RUN printf '#!/bin/sh\nrclone rcd --rc-no-auth --rc-addr :5572 --config /home/node/.n8n/rclone/rclone.conf &\nexec /docker-entrypoint.sh "$@"\n' > /custom-entrypoint.sh && \
     chmod +x /custom-entrypoint.sh
 
 USER node
