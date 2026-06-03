@@ -7,7 +7,12 @@ RUN wget -O /tmp/rclone.zip https://downloads.rclone.org/rclone-current-linux-am
     unzip rclone.zip && \
     mv rclone-*-linux-amd64/rclone /usr/local/bin/ && \
     chmod +x /usr/local/bin/rclone && \
-    rm -rf /tmp/rclone* && \
-    chown -R node:node /home/node/.n8n 2>/dev/null || true
+    rm -rf /tmp/rclone*
 
-USER node
+RUN echo '#!/bin/sh' > /docker-entrypoint.sh && \
+    echo 'chown -R node:node /home/node/.n8n 2>/dev/null || true' >> /docker-entrypoint.sh && \
+    echo 'exec su-exec node "$@"' >> /docker-entrypoint.sh && \
+    chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["n8n"]
